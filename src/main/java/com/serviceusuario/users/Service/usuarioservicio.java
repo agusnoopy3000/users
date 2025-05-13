@@ -2,7 +2,7 @@ package com.serviceusuario.users.Service;
 import com.serviceusuario.users.Modelo.Usuarios;
 import java.util.List;
 
-public interface UsuarioServicio {
+public interface UsuarioServicio {//Interfaz para el servicio
     
     Usuarios registrar(Usuarios usuario);
     Usuarios obtenerPorId(int id);
