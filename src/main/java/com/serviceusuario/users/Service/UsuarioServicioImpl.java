@@ -40,7 +40,7 @@ public class UsuarioServicioImpl implements UsuarioServicio  {
     }
 
     @Override
-    public Usuarios modificarUsuario(int id, Usuarios usuarioActualizado) {
+    public Usuarios modificarUsuario(int id, Usuarios usuarioActualizado) { //Seteo por cada atributo
         Usuarios existente = obtenerPorId(id);
         existente.setNombreUsuario(usuarioActualizado.getNombreUsuario());
         existente.setCorreo(usuarioActualizado.getCorreo());
@@ -66,4 +66,13 @@ public class UsuarioServicioImpl implements UsuarioServicio  {
         usuario.setEstadoSuscripcion(nuevaSuscripcion);
         return usuarioRepository.save(usuario);
     }
+    public List<Usuarios> listarPorRol(String rol) {
+        return usuarioRepository.findByRol(rol);
+    }
+
+    public List<Usuarios> listarActivos() {
+
+        return usuarioRepository.findByEstadoCuenta(true);
+    }
+
 }
