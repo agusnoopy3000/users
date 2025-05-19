@@ -1,6 +1,8 @@
 package com.serviceusuario.users.Repositorio;
 
 import com.serviceusuario.users.Modelo.Usuarios;
+import com.serviceusuario.users.Modelo.Usuarios.EstadoSuscripcion;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -26,5 +28,8 @@ public interface UsuarioRepository extends JpaRepository<Usuarios, Integer> {
     List<Usuarios> findByEstadoCuenta(boolean estadoCuenta);
 
     // Buscar todos los usuarios con estado de suscripción específico
-    List<Usuarios> findByEstadoSuscripcion(boolean estadoSuscripcion);
+    List<Usuarios> findByEstadoSuscripcion(EstadoSuscripcion estadoSuscripcion);
+
+
+    
 }

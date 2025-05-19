@@ -1,5 +1,6 @@
 package com.serviceusuario.users.Controller;
 
+import com.serviceusuario.users.Modelo.Usuarios.EstadoSuscripcion;
 import com.serviceusuario.users.Modelo.Usuarios;
 import com.serviceusuario.users.Service.UsuarioServicio;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,52 +20,53 @@ public class UsuarioController {
         this.usuarioServicio = usuarioServicio;
     }
 
-    // 1. Registrar usuario
     @PostMapping("/registro")
     public ResponseEntity<Usuarios> registrarUsuario(@RequestBody Usuarios usuario) {
         Usuarios creado = usuarioServicio.registrar(usuario);
         return ResponseEntity.ok(creado);
     }
 
-    // 2. Obtener perfil por ID
     @GetMapping("/{id}")
     public ResponseEntity<Usuarios> obtenerPerfil(@PathVariable int id) {
         Usuarios usuario = usuarioServicio.obtenerPorId(id);
         return ResponseEntity.ok(usuario);
     }
 
-    // 3. Listar todos los usuarios
     @GetMapping
     public ResponseEntity<List<Usuarios>> listarUsuarios() {
         List<Usuarios> usuarios = usuarioServicio.listarTodos();
         return ResponseEntity.ok(usuarios);
     }
 
-    // 4. Obtener estado de suscripción por ID
     @GetMapping("/{id}/suscripcion")
-    public ResponseEntity<Boolean> obtenerEstadoSuscripcion(@PathVariable int id) {
-        boolean estado = usuarioServicio.obtenerEstadoSuscripcion(id);
+    public ResponseEntity<EstadoSuscripcion> obtenerEstadoSuscripcion(@PathVariable int id) {
+        EstadoSuscripcion estado = usuarioServicio.obtenerEstadoSuscripcion(id);
         return ResponseEntity.ok(estado);
     }
 
-    // 5. Modificar usuario completo
     @PutMapping("/{id}")
     public ResponseEntity<Usuarios> modificarUsuario(@PathVariable int id, @RequestBody Usuarios usuario) {
         Usuarios actualizado = usuarioServicio.modificarUsuario(id, usuario);
         return ResponseEntity.ok(actualizado);
     }
 
-    // 6. Eliminar usuario
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminarUsuario(@PathVariable int id) {
         usuarioServicio.eliminar(id);
         return ResponseEntity.noContent().build();
     }
 
-    // 7. Modificar solo la suscripción
     @PutMapping("/{id}/suscripcion")
-    public ResponseEntity<Usuarios> modificarSuscripcion(@PathVariable int id, @RequestBody boolean nuevaSuscripcion) {
-        Usuarios actualizado = usuarioServicio.modificarSuscripcion(id, nuevaSuscripcion);
+    public ResponseEntity<Usuarios> modificarSuscripcion(@PathVariable int id, @RequestBody String nuevaSuscripcion) {
+        EstadoSuscripcion estadoEnum;
+        try {
+            estadoEnum = EstadoSuscripcion.valueOf(nuevaSuscripcion.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().build(); // Estado inválido
+        }
+
+        Usuarios actualizado = usuarioServicio.modificarSuscripcion(id, estadoEnum);
         return ResponseEntity.ok(actualizado);
     }
 }
+

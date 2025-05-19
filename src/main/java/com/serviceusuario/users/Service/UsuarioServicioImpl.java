@@ -1,14 +1,15 @@
 package com.serviceusuario.users.Service;
+
+import com.serviceusuario.users.Modelo.Usuarios.EstadoSuscripcion;;
 import com.serviceusuario.users.Modelo.Usuarios;
 import com.serviceusuario.users.Repositorio.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
-public class UsuarioServicioImpl implements UsuarioServicio  {
+public class UsuarioServicioImpl implements UsuarioServicio {
 
     private final UsuarioRepository usuarioRepository;
 
@@ -34,20 +35,19 @@ public class UsuarioServicioImpl implements UsuarioServicio  {
     }
 
     @Override
-    public boolean obtenerEstadoSuscripcion(int id) {
-        Usuarios usuario = obtenerPorId(id);
-        return usuario.isEstadoSuscripcion();
+    public EstadoSuscripcion obtenerEstadoSuscripcion(int id) {
+        return obtenerPorId(id).getEstadoSuscripcion();
     }
 
     @Override
-    public Usuarios modificarUsuario(int id, Usuarios usuarioActualizado) { //Seteo por cada atributo
+    public Usuarios modificarUsuario(int id, Usuarios usuarioActualizado) {
         Usuarios existente = obtenerPorId(id);
         existente.setNombreUsuario(usuarioActualizado.getNombreUsuario());
         existente.setCorreo(usuarioActualizado.getCorreo());
         existente.setContrasenia(usuarioActualizado.getContrasenia());
         existente.setRol(usuarioActualizado.getRol());
         existente.setEstadoCuenta(usuarioActualizado.isEstadoCuenta());
-        existente.setEstadoSuscripcion(usuarioActualizado.isEstadoSuscripcion());
+        existente.setEstadoSuscripcion(usuarioActualizado.getEstadoSuscripcion());
         existente.setFechaVencimientoSuscripcion(usuarioActualizado.getFechaVencimientoSuscripcion());
         return usuarioRepository.save(existente);
     }
@@ -61,18 +61,18 @@ public class UsuarioServicioImpl implements UsuarioServicio  {
     }
 
     @Override
-    public Usuarios modificarSuscripcion(int id, boolean nuevaSuscripcion) {
+    public Usuarios modificarSuscripcion(int id, EstadoSuscripcion nuevaSuscripcion) {
         Usuarios usuario = obtenerPorId(id);
         usuario.setEstadoSuscripcion(nuevaSuscripcion);
         return usuarioRepository.save(usuario);
     }
+
     public List<Usuarios> listarPorRol(String rol) {
         return usuarioRepository.findByRol(rol);
     }
 
     public List<Usuarios> listarActivos() {
-
         return usuarioRepository.findByEstadoCuenta(true);
     }
-
 }
+

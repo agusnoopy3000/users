@@ -32,8 +32,14 @@ public class Usuarios {
     @Column(name = "estado_cuenta", nullable = false)
     private boolean estadoCuenta;
 
-    @Column(name = "estado_suscripcion", nullable = false)
-    private boolean estadoSuscripcion;
+   @Enumerated(EnumType.STRING)
+    private EstadoSuscripcion estadoSuscripcion;
+    public enum EstadoSuscripcion {
+        ACTIVA,
+        DESACTIVADA,
+        EXPIRADA,
+        ERROR
+    }
 
     @Temporal(TemporalType.DATE)
     @Column(name = "fecha_vencimiento_suscripcion", nullable = false)

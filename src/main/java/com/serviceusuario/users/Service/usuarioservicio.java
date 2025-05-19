@@ -1,14 +1,23 @@
 package com.serviceusuario.users.Service;
+
 import com.serviceusuario.users.Modelo.Usuarios;
+import com.serviceusuario.users.Modelo.Usuarios.EstadoSuscripcion;
+
 import java.util.List;
 
-public interface UsuarioServicio {//Interfaz para el servicio
-    
+public interface UsuarioServicio {
+
     Usuarios registrar(Usuarios usuario);
+    
     Usuarios obtenerPorId(int id);
+    
     List<Usuarios> listarTodos();
-    boolean obtenerEstadoSuscripcion(int id);
+    
+    EstadoSuscripcion obtenerEstadoSuscripcion(int id); // cambiado de String a enum
+    
     Usuarios modificarUsuario(int id, Usuarios usuario);
+    
     void eliminar(int id);
-    Usuarios modificarSuscripcion(int id, boolean nuevaSuscripcion);
+    
+    Usuarios modificarSuscripcion(int id, EstadoSuscripcion nuevaSuscripcion); // cambiado a enum
 }
