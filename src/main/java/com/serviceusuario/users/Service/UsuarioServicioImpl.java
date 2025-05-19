@@ -1,6 +1,6 @@
 package com.serviceusuario.users.Service;
 
-import com.serviceusuario.users.Modelo.Usuarios.EstadoSuscripcion;;
+import com.serviceusuario.users.Modelo.Usuarios.EstadoSuscripcion;
 import com.serviceusuario.users.Modelo.Usuarios;
 import com.serviceusuario.users.Repositorio.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
