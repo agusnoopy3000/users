@@ -22,17 +22,18 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public Usuarios registrar(Usuarios usuario) {
         return usuarioRepository.save(usuario);
     }
-
+    //Obtener usuario por ID
     @Override
     public Usuarios obtenerPorId(int id) {
         return usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
     }
-
+    //Listar TODOS los usuarios
     @Override
     public List<Usuarios> listarTodos() {
         return usuarioRepository.findAll();
     }
+    //Obtener estado de suscripcion por ID
 
     @Override
     public EstadoSuscripcion obtenerEstadoSuscripcion(int id) {
@@ -48,10 +49,9 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         existente.setRol(usuarioActualizado.getRol());
         existente.setEstadoCuenta(usuarioActualizado.isEstadoCuenta());
         existente.setEstadoSuscripcion(usuarioActualizado.getEstadoSuscripcion());
-        existente.setFechaVencimientoSuscripcion(usuarioActualizado.getFechaVencimientoSuscripcion());
         return usuarioRepository.save(existente);
     }
-
+    // Eliminar usuario por id
     @Override
     public void eliminar(int id) {
         if (!usuarioRepository.existsById(id)) {
@@ -59,6 +59,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         }
         usuarioRepository.deleteById(id);
     }
+    // Modificar suscripcion por id de usuario y seteo de nueva suscripcion(ACTIVA,DESACTIVA...)
 
     @Override
     public Usuarios modificarSuscripcion(int id, EstadoSuscripcion nuevaSuscripcion) {
@@ -66,11 +67,13 @@ public class UsuarioServicioImpl implements UsuarioServicio {
         usuario.setEstadoSuscripcion(nuevaSuscripcion);
         return usuarioRepository.save(usuario);
     }
+    //Listar Usuarios por rol
 
     public List<Usuarios> listarPorRol(String rol) {
         return usuarioRepository.findByRol(rol);
     }
 
+   //Listar Usuarios con Estado de cuenta true
     public List<Usuarios> listarActivos() {
         return usuarioRepository.findByEstadoCuenta(true);
     }

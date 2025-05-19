@@ -29,6 +29,9 @@ public interface UsuarioRepository extends JpaRepository<Usuarios, Integer> {
 
     // Buscar todos los usuarios con estado de suscripción específico
     List<Usuarios> findByEstadoSuscripcion(EstadoSuscripcion estadoSuscripcion);
+    //Buscar por estados de Suscripcion.
+    List<Usuarios> findByEstadoSuscripcionIn(List<EstadoSuscripcion> estados);
+
 
 
     

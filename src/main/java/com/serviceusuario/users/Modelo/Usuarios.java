@@ -20,6 +20,18 @@ public class Usuarios {
     @Column(name = "nombre_usuario", nullable = false, unique = true)
     private String nombreUsuario;
 
+    @Column(name = "pnombre", nullable = false)
+    private String pnombre;
+
+    @Column(name = "snombre", nullable = false)
+    private String snombre;
+
+    @Column(name = "appaterno", nullable = false)
+    private String appaterno;
+
+    @Column(name = "apmaterno", nullable = false)
+    private String apmaterno;
+
     @Column(name = "correo", nullable = false, unique = true)
     private String correo;
 
@@ -40,9 +52,5 @@ public class Usuarios {
         EXPIRADA,
         ERROR
     }
-
-    @Temporal(TemporalType.DATE)
-    @Column(name = "fecha_vencimiento_suscripcion", nullable = false)
-    private Date fechaVencimientoSuscripcion;
 
 }
