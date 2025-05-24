@@ -6,6 +6,10 @@ import com.serviceusuario.users.Modelo.Usuarios.EstadoSuscripcion;
 import java.util.List;
 
 public interface UsuarioServicio {
+    List<Usuarios> buscarUsuarios(String rol, Boolean estadoCuenta, Usuarios.EstadoSuscripcion estadoSuscripcion);
+    List<Usuarios> buscarPorEstadosSuscripcion(List<EstadoSuscripcion> estados);
+    
+
 
     Usuarios registrar(Usuarios usuario);
     

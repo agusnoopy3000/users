@@ -19,6 +19,25 @@ public class UsuarioController {
     public UsuarioController(UsuarioServicio usuarioServicio) {
         this.usuarioServicio = usuarioServicio;
     }
+    @GetMapping("/buscar")
+    public ResponseEntity<List<Usuarios>> buscarUsuarios(
+        @RequestParam(required = false) String rol,
+        @RequestParam(required = false) Boolean estadoCuenta,
+        @RequestParam(required = false) Usuarios.EstadoSuscripcion estadoSuscripcion
+    ) {
+    List<Usuarios> resultado = usuarioServicio.buscarUsuarios(rol, estadoCuenta, estadoSuscripcion);
+    return ResponseEntity.ok(resultado);
+    }
+    
+    @GetMapping("/filtro/suscripciones")
+    public ResponseEntity<List<Usuarios>> filtrarPorSuscripciones(
+        @RequestParam List<EstadoSuscripcion> estados
+    ) {
+    List<Usuarios> usuarios = usuarioServicio.buscarPorEstadosSuscripcion(estados);
+    return ResponseEntity.ok(usuarios);
+    }
+
+
 
     @PostMapping("/registro")
     public ResponseEntity<Usuarios> registrarUsuario(@RequestBody Usuarios usuario) {

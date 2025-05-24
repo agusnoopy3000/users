@@ -17,6 +17,17 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public UsuarioServicioImpl(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
+    @Override
+    public List<Usuarios> buscarUsuarios(String rol, Boolean estadoCuenta, Usuarios.EstadoSuscripcion estadoSuscripcion) {
+    return usuarioRepository.buscarUsuariosCondicionales(rol, estadoCuenta, estadoSuscripcion);
+    }
+    
+    @Override
+    public List<Usuarios> buscarPorEstadosSuscripcion(List<EstadoSuscripcion> estados) {
+    return usuarioRepository.findByEstadoSuscripcionIn(estados);
+    }
+
+
 
     @Override
     public Usuarios registrar(Usuarios usuario) {
