@@ -1,28 +1,18 @@
-package com.serviceusuario.users.Repositorio;
-
-import com.serviceusuario.users.Modelo.Usuarios;
-import com.serviceusuario.users.Modelo.Usuarios.EstadoSuscripcion;
+package com.serviceusuario.users.Repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.serviceusuario.users.Model.Usuarios;
+import com.serviceusuario.users.Model.Usuarios.EstadoSuscripcion;
+
 import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuarios, Integer> {
-    @Query("SELECT u FROM Usuarios u WHERE " +
-           "(:rol IS NULL OR u.rol = :rol) AND " +
-           "(:estadoCuenta IS NULL OR u.estadoCuenta = :estadoCuenta) AND " +
-           "(:estadoSuscripcion IS NULL OR u.estadoSuscripcion = :estadoSuscripcion)")
-    List<Usuarios> buscarUsuariosCondicionales(
-        @Param("rol") String rol,
-        @Param("estadoCuenta") Boolean estadoCuenta,
-        @Param("estadoSuscripcion") Usuarios.EstadoSuscripcion estadoSuscripcion
-    );
-
 
     // Buscar usuario por nombre de usuario (único)
     Optional<Usuarios> findByNombreUsuario(String nombreUsuario);
@@ -43,6 +33,16 @@ public interface UsuarioRepository extends JpaRepository<Usuarios, Integer> {
     List<Usuarios> findByEstadoSuscripcion(EstadoSuscripcion estadoSuscripcion);
     //Buscar por estados de Suscripcion.
     List<Usuarios> findByEstadoSuscripcionIn(List<EstadoSuscripcion> estados);
+
+    @Query("SELECT u FROM Usuarios u WHERE " +
+           "(:rol IS NULL OR u.rol = :rol) AND " +
+           "(:estadoCuenta IS NULL OR u.estadoCuenta = :estadoCuenta) AND " +
+           "(:estadoSuscripcion IS NULL OR u.estadoSuscripcion = :estadoSuscripcion)") //Condiciones de filtros 
+    List<Usuarios> buscarUsuariosCondicionales(
+        @Param("rol") String rol,
+        @Param("estadoCuenta") Boolean estadoCuenta,
+        @Param("estadoSuscripcion") Usuarios.EstadoSuscripcion estadoSuscripcion
+    );
 
 
 

@@ -1,13 +1,16 @@
 package com.serviceusuario.users.Service;
 
-import com.serviceusuario.users.Modelo.Usuarios.EstadoSuscripcion;
-import com.serviceusuario.users.Modelo.Usuarios;
-import com.serviceusuario.users.Repositorio.UsuarioRepository;
+import com.serviceusuario.users.Model.Usuarios;
+import com.serviceusuario.users.Model.Usuarios.EstadoSuscripcion;
+import com.serviceusuario.users.Repository.UsuarioRepository;
+
+import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Transactional
 @Service
 public class UsuarioServicioImpl implements UsuarioServicio {
 
@@ -17,18 +20,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public UsuarioServicioImpl(UsuarioRepository usuarioRepository) {
         this.usuarioRepository = usuarioRepository;
     }
-    @Override
-    public List<Usuarios> buscarUsuarios(String rol, Boolean estadoCuenta, Usuarios.EstadoSuscripcion estadoSuscripcion) {
-    return usuarioRepository.buscarUsuariosCondicionales(rol, estadoCuenta, estadoSuscripcion);
-    }
-    
-    @Override
-    public List<Usuarios> buscarPorEstadosSuscripcion(List<EstadoSuscripcion> estados) {
-    return usuarioRepository.findByEstadoSuscripcionIn(estados);
-    }
-
-
-
+     //Registrar un usuario.
     @Override
     public Usuarios registrar(Usuarios usuario) {
         return usuarioRepository.save(usuario);
@@ -50,7 +42,7 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public EstadoSuscripcion obtenerEstadoSuscripcion(int id) {
         return obtenerPorId(id).getEstadoSuscripcion();
     }
-
+    // Modifica todos los datos de un usuario.
     @Override
     public Usuarios modificarUsuario(int id, Usuarios usuarioActualizado) {
         Usuarios existente = obtenerPorId(id);
@@ -88,5 +80,16 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public List<Usuarios> listarActivos() {
         return usuarioRepository.findByEstadoCuenta(true);
     }
+    //Listar Usuarios por filtros. ROL , ESTADO CUENTA, ESTADO SUSCRIPCION.
+    @Override
+    public List<Usuarios> buscarUsuarios(String rol, Boolean estadoCuenta, Usuarios.EstadoSuscripcion estadoSuscripcion) {
+    return usuarioRepository.buscarUsuariosCondicionales(rol, estadoCuenta, estadoSuscripcion);
+    }
+    //Listar usuarios por filtro de estado de suscripcion.
+    @Override
+    public List<Usuarios> buscarPorEstadosSuscripcion(List<EstadoSuscripcion> estados) {
+    return usuarioRepository.findByEstadoSuscripcionIn(estados);
+    }
+
 }
 
